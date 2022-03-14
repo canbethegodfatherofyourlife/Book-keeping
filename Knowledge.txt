@@ -1,2 +1,0 @@
-1. create 2 folders, git init in main directory , npm i express, server.js me basic intro code
-2. Set up user routes in backend and connect to Postman 
