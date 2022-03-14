@@ -1,18 +1,32 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dbConnect = require('./config/dbConnect')
+const User = require('./models/User')
 
 const app = express()
 
 // DB connect
 dbConnect()
 
+
+// Passing body data and accept incoming data
+app.use(express.json())
+
+
+
 //Routes
 // User routes
 
 // Register
-app.post('/api/users/register',(req,res) => {
-    res.send('Register route')
+app.post('/api/users/register',async(req,res) => {
+    
+    try{
+        const { name, email, password } = req.body;
+        const user = await User.create({name,email,password});
+        res.send(user)
+    }catch(err){
+        console.log(err);
+    }
 })
 
 // Login
