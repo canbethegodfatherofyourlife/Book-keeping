@@ -2,6 +2,7 @@ const express = require("express");
 const generateToken = require("../utils/generateToken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
+const authMiddleware = require("../middlewares/authMiddleware")
 
 const usersRoute = express.Router();
 usersRoute.post(
@@ -54,7 +55,7 @@ usersRoute.post(
   );
 
 // Update User
-usersRoute.put("/update", (req, res) => {
+usersRoute.put("/update", authMiddleware, (req, res) => {
   res.send("Update route");
 });
 
@@ -64,8 +65,8 @@ usersRoute.delete("/delete/:id", (req, res) => {
 });
 
 // Fetch User
-usersRoute.get("/", (req, res) => {
-  res.send("Fetch route");
+usersRoute.get("/", authMiddleware,(req, res) => {
+  res.send(req.user);
 });
 
 module.exports = usersRoute;

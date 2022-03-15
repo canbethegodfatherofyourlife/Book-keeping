@@ -17,4 +17,19 @@ bookRouter.post('/', asyncHandler(async(req,res) => {
     }
 }))
 
+
+// Fetch book
+bookRouter.get('/', asyncHandler(async(req,res) => {
+    const book = await Book.find({});
+
+    if (book){
+        res.status(200);
+        res.json(book);
+    }else{
+        res.status(500);
+        throw new Error('Book creating failed');
+    }
+}))
+
+
 module.exports = bookRouter;
