@@ -1,4 +1,5 @@
 const express = require("express");
+const generateToken = require("../utils/generateToken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 
@@ -14,7 +15,14 @@ usersRoute.post(
       throw new Error("User Exists");
     }
     const user = await User.create({ name, email, password });
-    res.send(user);
+    res.json({
+        _id: user._id,
+        name: user.name,
+        password: user.password,
+        email: user.email,
+        token: generateToken(user._id)
+
+    })
   })
 );
 
@@ -27,7 +35,7 @@ usersRoute.post(
       const {email,password} = req.body
 
       const user = await User.findOne({email: email})
-      if (user){
+      if (user && await(user.isPasswordVerified(password))) {
           // set status code
           res.status(200)
           res.json({
@@ -35,6 +43,7 @@ usersRoute.post(
               name: user.name,
               password: user.password,
               email: user.email,
+              token: generateToken(user._id)
 
           })
       }else{
