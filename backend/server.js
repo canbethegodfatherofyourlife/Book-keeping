@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const dbConnect = require('./config/dbConnect')
 const error = require('./middlewares/errorMiddleware')
 const usersRoute = require('./routes/usersRoute')
+const bookRoute = require('./routes/bookRoute')
 
 const app = express()
 
@@ -20,6 +21,10 @@ app.use(express.json())
 //Routes
 // User routes
 app.use('/api/users',usersRoute)
+
+//Book routes
+app.use('/api/books',bookRoute)
+
 
 // Error Middleware 
 app.use(error.errorMiddleware)
