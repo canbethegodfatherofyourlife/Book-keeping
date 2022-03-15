@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dbConnect = require('./config/dbConnect')
-const User = require('./models/User')
+const usersRoute = require('./routes/usersRoute')
 
 const app = express()
 
@@ -16,38 +16,7 @@ app.use(express.json())
 
 //Routes
 // User routes
-
-// Register
-app.post('/api/users/register',async(req,res) => {
-    
-    try{
-        const { name, email, password } = req.body;
-        const user = await User.create({name,email,password});
-        res.send(user)
-    }catch(err){
-        console.log(err);
-    }
-})
-
-// Login
-app.post('/api/users/login',(req,res) => {
-    res.send('Login route')
-})
-
-// Update User
-app.put('/api/users/update',(req,res) => {
-    res.send('Update route')
-})
-
-// Delete User
-app.delete('/api/users/delete/:id',(req,res) => {
-    res.send('Delete route')
-})
-
-// Fetch User
-app.get('/api/users',(req,res) => {
-    res.send('Fetch route')
-})
+app.use('/api/users',usersRoute)
 
 
 // Server 
@@ -56,6 +25,3 @@ app.listen(PORT,()=> {
     console.log(`Server is up and running ${PORT}`)
 })
 
-
-// book
-// eduBl2eiLy3FqlFl
