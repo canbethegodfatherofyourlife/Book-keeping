@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dbConnect = require('./config/dbConnect')
+const error = require('./middlewares/errorMiddleware')
 const usersRoute = require('./routes/usersRoute')
 
 const app = express()
@@ -18,6 +19,8 @@ app.use(express.json())
 // User routes
 app.use('/api/users',usersRoute)
 
+// Error Middleware 
+app.use(error.errorMiddleware)
 
 // Server 
 const PORT = process.env.PORT || 3010;    // if deployed in heroku , otherwise on port 3010
