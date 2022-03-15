@@ -27,9 +27,32 @@ bookRouter.get('/', asyncHandler(async(req,res) => {
         res.json(book);
     }else{
         res.status(500);
-        throw new Error('Book creating failed');
+        throw new Error('There are no books');
     }
 }))
 
+// Update book
+bookRouter.put('/:id', authMiddleware, asyncHandler(async (req, res)=>{
+
+    const book = await Book.findById(req.params.id);
+
+    if (book){
+
+        const updatedBook = await Book.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+            }
+        )
+        res.status(200);
+        res.json(updatedBook);
+
+    }else{
+        res.status(500);
+        throw new Error('Update failed');
+    }
+}))
 
 module.exports = bookRouter;

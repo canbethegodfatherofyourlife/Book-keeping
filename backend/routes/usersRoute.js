@@ -55,8 +55,28 @@ usersRoute.post(
   );
 
 // Update User
-usersRoute.put("/update", authMiddleware, (req, res) => {
-  res.send("Update route");
+usersRoute.put("/update", authMiddleware, a(req, res) => {
+  
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email
+
+    if (req.body.password) {
+      user.password = req.body.password || user.password
+    }
+
+    const updatedUser = await user.save()
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      password: updatedUser.password,
+      email: updatedUser.email,
+
+  })
+
+  }
 });
 
 // Delete User
