@@ -55,7 +55,7 @@ usersRoute.post(
   );
 
 // Update User
-usersRoute.put("/update", authMiddleware, a(req, res) => {
+usersRoute.put("/update", authMiddleware, asyncHandler(async(req, res) => {
   
   const user = await User.findById(req.user._id);
 
@@ -77,7 +77,7 @@ usersRoute.put("/update", authMiddleware, a(req, res) => {
   })
 
   }
-});
+})) ;
 
 // Delete User
 usersRoute.delete("/delete/:id", (req, res) => {
