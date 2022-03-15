@@ -2,10 +2,9 @@ const mongoose = require("mongoose");
 
 const dbConnect = () => {
   // connect DB
-  const dbUrl =
-    "mongodb+srv://book:eduBl2eiLy3FqlFl@cluster0.ojgdo.mongodb.net/book-keeping-app"; // change test to the name of our app
+  // change test to the name of our app
   mongoose
-    .connect(dbUrl, {
+    .connect(process.env.MONGO_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     })

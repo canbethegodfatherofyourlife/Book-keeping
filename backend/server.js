@@ -1,14 +1,16 @@
 const express = require('express')
-const mongoose = require('mongoose')
+const dotenv = require('dotenv')
 const dbConnect = require('./config/dbConnect')
 const error = require('./middlewares/errorMiddleware')
 const usersRoute = require('./routes/usersRoute')
 
 const app = express()
 
+
+dotenv.config() 
+
 // DB connect
 dbConnect()
-
 
 // Passing body data and accept incoming data
 app.use(express.json())
